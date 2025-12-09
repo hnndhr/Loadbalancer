@@ -104,21 +104,21 @@
       <div class="glass card rounded-2xl p-6 flex flex-col items-center">
         <h3 class="text-xl font-semibold text-[#4b2e05] mb-2">Kasir 1</h3>
         <p class="text-sm text-[#7b5a3a]">Tunai</p>
-        <span class="text-5xl font-bold text-[#a07644] mt-3">0</span>
+        <span id="kasir1" class="text-5xl font-bold text-[#a07644] mt-3">0</span>
         <p class="text-[#7b5a3a] mt-1">pelanggan</p>
       </div>
 
       <div class="glass card rounded-2xl p-6 flex flex-col items-center">
         <h3 class="text-xl font-semibold text-[#4b2e05] mb-2">Kasir 2</h3>
         <p class="text-sm text-[#7b5a3a]">Non-Tunai 1</p>
-        <span class="text-5xl font-bold text-[#a07644] mt-3">0</span>
+        <span id="kasir2" class="text-5xl font-bold text-[#a07644] mt-3">0</span>
         <p class="text-[#7b5a3a] mt-1">pelanggan</p>
       </div>
 
       <div class="glass card rounded-2xl p-6 flex flex-col items-center">
         <h3 class="text-xl font-semibold text-[#4b2e05] mb-2">Kasir 3</h3>
         <p class="text-sm text-[#7b5a3a]">Non-Tunai 2</p>
-        <span class="text-5xl font-bold text-[#a07644] mt-3">0</span>
+        <span  id="kasir3" class="text-5xl font-bold text-[#a07644] mt-3">0</span>
         <p class="text-[#7b5a3a] mt-1">pelanggan</p>
       </div>
 
