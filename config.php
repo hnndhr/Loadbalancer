@@ -74,10 +74,10 @@ function logRequest($kasir, $data, $status_code, $db_logs) {
     $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'UNKNOWN';
     $query_type = "INSERT";
 
-    // Antisipasi jika index tidak ada
+    // FIX: Cek dua kemungkinan key untuk metode pembayaran
     $nama   = $data['nama'] ?? '-';
     $jumlah = isset($data['jumlah_barang']) ? intval($data['jumlah_barang']) : 0;
-    $metode = $data['metode'] ?? '-';
+    $metode = $data['metode_pembayaran'] ?? $data['metode'] ?? '-';
 
     $stmt->bind_param(
         "ssssisi",

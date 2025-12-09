@@ -4,7 +4,7 @@
 
         <!-- Title -->
         <h2 class="text-2xl font-bold tracking-wide 
-                   bg-gradient-to-r from-[#4b2e05] to-[#a07644] text-transparent bg-clip-text">
+                   text-[#4b2e05] bg-clip-text">
             Load Balancer Kasir
         </h2>
 

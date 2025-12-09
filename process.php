@@ -8,7 +8,7 @@ $start_exec = microtime(true);
 // --- Ambil input dari form ---
 $nama = $_POST['nama'] ?? null;
 $jumlah_barang = intval($_POST['jumlah_barang'] ?? 0);
-$metode = $_POST['metode_pembayaran'] ?? null; // FORM KAMU gunakan metode_pembayaran
+$metode = $_POST['metode_pembayaran'] ?? null;
 
 if (!$nama || !$jumlah_barang || !$metode) {
     die("Data tidak lengkap.");
@@ -27,7 +27,10 @@ if ($metode === 'tunai') {
     $conn1 = connectDB($db_kasir_non1);
     $conn2 = connectDB($db_kasir_non2);
 
-    if (!$conn1 || !$conn2) die("Koneksi ke kasir non-tunai gagal.");
+    if (!$conn1 || !$conn2) {
+        logRequest('Error', $_POST, 503, $db_logs);
+        die("Koneksi ke kasir non-tunai gagal.");
+    }
 
     $count1 = $conn1->query("SELECT COUNT(*) AS total FROM nontunai")->fetch_assoc()['total'] ?? 0;
     $count2 = $conn2->query("SELECT COUNT(*) AS total FROM nontunai")->fetch_assoc()['total'] ?? 0;
@@ -39,8 +42,9 @@ if ($metode === 'tunai') {
         $conn = $conn2;
         $kasir_label = 'Gurat';
     } else {
-        $conn = (rand(1,2) == 1 ? $conn1 : $conn2);
-        $kasir_label = (rand(1,2) == 1 ? 'Hellen' : 'Gurat');
+        $rand = rand(1,2);
+        $conn = ($rand == 1 ? $conn1 : $conn2);
+        $kasir_label = ($rand == 1 ? 'Hellen' : 'Gurat');
     }
 
     $tabel = 'nontunai';
@@ -65,20 +69,18 @@ $stmt = $conn->prepare("INSERT INTO $tabel (nama, jumlah_barang, metode_pembayar
 $stmt->bind_param("sissssi", $nama, $jumlah_barang, $metode, $arrival_time, $start_time, $end_time, $waiting_time);
 
 $status = "❌ Gagal menambah data";
-if ($stmt->execute()) {
-    $status = "✅ Data berhasil dikirim ke kasir $kasir_label";
-}
+$status_code = 500;
 
 if ($stmt->execute()) {
-    logRequest($kasir, $_POST, 200, $db_logs);  // success = 200
-    echo "Transaksi telah diproses ke kasir: $kasir";
-} else {
-    logRequest($kasir, $_POST, 500, $db_logs);  // gagal = 500
-    echo "Gagal insert ke kasir!";
-} 
+    $status = "✅ Data berhasil dikirim ke kasir $kasir_label";
+    $status_code = 200;
+}
 
 $stmt->close();
 $conn->close();
+
+// --- LOG REQUEST (sekali saja, setelah proses selesai) ---
+logRequest($kasir_label, $_POST, $status_code, $db_logs);
 
 // --- Waktu & ukuran data ---
 $end_exec = microtime(true);
