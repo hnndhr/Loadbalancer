@@ -1,10 +1,6 @@
 <?php
-// =======================
-// CONFIG DATABASE REMOTE 
-// =======================
-
 $db_kasir_tunai = [
-  'host' => '10.175.160.50',
+  'host' => '10.199.38.50',
   'port' => '3307',
   'user' => 'Hana',
   'pass' => '123',
@@ -12,24 +8,22 @@ $db_kasir_tunai = [
 ];
 
 $db_kasir_non1 = [
-  'host' => '10.175.160.50',
-  'port' => '3307',
-  'user' => 'Meelway',
-  'pass' => '123',
+  'host' => '10.199.38.129',
+  'port' => '3306',
+  'user' => 'hellen2',
+  'pass' => 'admin',
   'name' => 'komgrid'
 ];
 
 $db_kasir_non2 = [
-  'host' => '10.175.160.30',
-  'port' => 3306,
+  'host' => '10.199.38.30',
+  'port' => '3306',
   'user' => 'goerat2',
   'pass' => '1',
   'name' => 'komgrid'
 ];
 
-// =============================
 // CONFIG DATABASE LOCAL (LOGS)
-// =============================
 $db_logs = [
     'host' => 'localhost',
     'port' => 3306,
@@ -38,9 +32,7 @@ $db_logs = [
     'name' => 'lb_logs'
 ];
 
-// =============================
 // FUNGSI KONEKSI DATABASE
-// =============================
 function connectDB($config) {
     $port = $config['port'] ?? 3306;
     $conn = @new mysqli(
@@ -57,9 +49,7 @@ function connectDB($config) {
     return $conn;
 }
 
-// =============================
 // FUNGSI LOGGING KE DATABASE
-// =============================
 function logRequest($kasir, $data, $status_code, $db_logs) {
 
     $conn = connectDB($db_logs);
