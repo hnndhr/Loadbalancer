@@ -74,10 +74,12 @@ function logRequest($kasir, $data, $status_code, $db_logs) {
     $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'UNKNOWN';
     $query_type = "INSERT";
 
-    // FIX: Cek dua kemungkinan key untuk metode pembayaran
+    // Ambil data dari POST
     $nama   = $data['nama'] ?? '-';
     $jumlah = isset($data['jumlah_barang']) ? intval($data['jumlah_barang']) : 0;
-    $metode = $data['metode_pembayaran'] ?? $data['metode'] ?? '-';
+    
+    // FIX: Metode = HTTP Request Method (GET, POST, dll)
+    $metode = $_SERVER['REQUEST_METHOD'] ?? 'UNKNOWN';
 
     $stmt->bind_param(
         "ssssisi",
